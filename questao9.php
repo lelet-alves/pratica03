@@ -7,21 +7,40 @@
 </head>
 <body>
     <div class="container">
-    <h2>IDs Consolidados (Sem Duplicatas)</h2>
+    <h2>Consolidação de IDs (Sem Duplicatas)</h2>
+
+    <form method="post" action="">
+        <h3>Fonte A - Digite os IDs separados por vírgula:</h3>
+        <input type="text" name="fonteA" placeholder="Exemplo: 101,105,102" required>
+
+        <h3>Fonte B - Digite os IDs separados por vírgula:</h3>
+        <input type="text" name="fonteB" placeholder="Exemplo: 103,101,106" required>
+
+        <br><br>
+        <input type="submit" name="enviar" value="Consolidar IDs">
+    </form>
 
     <?php
-    $idsFonteA = [101, 105, 102];
-    $idsFonteB = [103, 101, 106];
+    if (isset($_POST['enviar'])) {
+        $inputFonteA = $_POST['fonteA'];
+        $inputFonteB = $_POST['fonteB'];
 
-    $todosIds = array_merge($idsFonteA, $idsFonteB);
+        $idsFonteA = array_map('trim', explode(',', $inputFonteA));
+        $idsFonteB = array_map('trim', explode(',', $inputFonteB));
 
-    $todosIdsUnicos = array_unique($todosIds);
+        $todosIds = array_merge($idsFonteA, $idsFonteB);
 
-    echo "<strong>Todos os IDs (sem duplicatas):</strong><br>";
-    foreach ($todosIdsUnicos as $id) {
-        echo "- $id<br>";
+        $todosIdsUnicos = array_unique($todosIds);
+
+        echo "<h3>Todos os IDs (sem duplicatas):</h3>";
+        echo "<ul>";
+        foreach ($todosIdsUnicos as $id) {
+            echo "<li>" . htmlspecialchars($id) . "</li>";
+        }
+        echo "</ul>";
     }
     ?>
     </div>
 </body>
 </html>
+

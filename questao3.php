@@ -2,32 +2,41 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Questão 3 - Gestão de Estoque de Livros</title>
-    <link rel="stylesheet" href="estilo.css">
+    <title>Lista de Convidados - Questão 3</title>
 </head>
 <body>
-    <div class="container">
-    <h2>Estoque Atualizado de Livros</h2>
 
-    <?php
-    $livros = [
-        "O Senhor dos Anéis",
-        "Dom Casmurro",
-        "1984",
-        "A Revolução dos Bichos",
-        "Harry Potter e a Pedra Filosofal"
-    ];
+<h2>Cadastro de Convidados</h2>
 
-    array_push($livros, "O Pequeno Príncipe");
+<form method="post" action="">
+    Informe o número de convidados que deseja cadastrar: 
+    <input type="number" name="quantidade" min="1" required>
+    <input type="submit" name="definir" value="Definir">
+</form>
 
-    unset($livros[2]);
+<?php
+if (isset($_POST['definir']) && isset($_POST['quantidade'])) {
+    $quantidade = intval($_POST['quantidade']);
 
-    $livros = array_values($livros);
-
-    foreach ($livros as $livro) {
-        echo "Livro: " . $livro . "<br>";
+    echo "<form method='post' action=''>";
+    for ($i = 1; $i <= $quantidade; $i++) {
+        echo "Convidado $i: <input type='text' name='convidados[]' required><br>";
     }
-    ?>
-    </div>
+    echo "<input type='submit' name='cadastrar' value='Cadastrar Convidados'>";
+    echo "</form>";
+}
+
+if (isset($_POST['cadastrar']) && isset($_POST['convidados'])) {
+    $convidados = $_POST['convidados'];
+
+    echo "<h3>Lista de Convidados:</h3>";
+    echo "<ul>";
+    foreach ($convidados as $nome) {
+        echo "<li>" . htmlspecialchars($nome) . "</li>";
+    }
+    echo "</ul>";
+}
+?>
+
 </body>
 </html>

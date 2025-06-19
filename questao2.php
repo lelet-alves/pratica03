@@ -2,30 +2,37 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Questão 2 - Boletim Escolar</title>
-    <link rel="stylesheet" href="estilo.css">
+    <title>Cadastro de Notas - Questão 2</title>
 </head>
 <body>
-    <div class="container">
-    <h2>Boletim do Aluno</h2>
 
-    <?php
-    $boletim = [
-        "Português"   => 9.5,
-        "Matemática"  => 7.0,
-        "História"    => 5.3,
-        "Geografia"   => 4.9
-    ];
+<h2>Cadastro de Notas por Disciplina</h2>
 
-    foreach ($boletim as $disciplina => $nota) {
-        echo "Disciplina: $disciplina - Nota: $nota - ";
-        if ($nota >= 7.0) {
-            echo "<strong>Aprovado</strong><br>";
-        } else {
-            echo "<strong>Reprovado</strong><br>";
-        }
-    }
-    ?>
-    </div>
+<form method="post" action="">
+    Nome da Disciplina: <input type="text" name="disciplina" required><br><br>
+    
+    Nota 1: <input type="number" name="notas[]" step="0.01" required><br>
+    Nota 2: <input type="number" name="notas[]" step="0.01" required><br>
+    Nota 3: <input type="number" name="notas[]" step="0.01" required><br>
+    Nota 4: <input type="number" name="notas[]" step="0.01" required><br><br>
+    
+    <input type="submit" value="Calcular Média">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $disciplina = $_POST['disciplina'];
+    $notas = $_POST['notas'];
+
+    $soma = array_sum($notas);
+    $media = $soma / count($notas);
+
+    echo "<h3>Resultado:</h3>";
+    echo "Disciplina: " . htmlspecialchars($disciplina) . "<br>";
+    echo "Notas: " . implode(", ", $notas) . "<br>";
+    echo "Média: " . number_format($media, 2, ',', '.') . "<br>";
+}
+?>
+
 </body>
 </html>

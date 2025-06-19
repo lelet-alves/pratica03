@@ -2,26 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Questão 1 - Gerenciamento de Produtos</title>
-    <link rel="stylesheet" href="estilo.css">
+    <title>Cadastro de Produto - Questão 1</title>
 </head>
 <body>
-    </div class="container">
-    <h2>Lista de produtos cadastrados</h2>
 
-    <?php
-    $produtos = [
-        ["nome" => "Smartphone XYZ", "sku" => "SKU001"],
-        ["nome" => "Notebook Ultra", "sku" => "SKU002"],
-        ["nome" => "Fone de Ouvido Pro", "sku" => "SKU003"],
-        ["nome" => "Câmera Digital ZoomX", "sku" => "SKU004"],
-        ["nome" => "Smartwatch FitLife", "sku" => "SKU005"]
-    ];
+<h2>Cadastro de Produto</h2>
 
-    foreach ($produtos as $produto) {
-        echo "Produto: " . $produto["nome"] . " - SKU: " . $produto["sku"] . "<br>";
-    }
-    ?>
-    </div>
+<form method="post" action="">
+    Nome do Produto: <input type="text" name="nome" required><br><br>
+    SKU: <input type="text" name="sku" required><br><br>
+    <input type="submit" value="Cadastrar Produto">
+</form>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nome = $_POST['nome'];
+    $sku = $_POST['sku'];
+
+    echo "<h3>Produto Cadastrado:</h3>";
+    echo "Nome: " . htmlspecialchars($nome) . "<br>";
+    echo "SKU: " . htmlspecialchars($sku) . "<br>";
+}
+?>
+
 </body>
 </html>

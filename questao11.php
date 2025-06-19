@@ -9,14 +9,29 @@
     <div class="container">
     <h2>Temperaturas Registradas</h2>
 
+    <form method="post" action="">
+        <label>Digite as temperaturas registradas (separadas por vírgula):</label><br>
+        <input type="text" name="temperaturas" placeholder="Exemplo: 22.5, 25.3, 19.8, 30.1" required size="50"><br><br>
+        <input type="submit" name="calcular" value="Calcular Máxima e Mínima">
+    </form>
+
     <?php
-    $temperaturasDiarias = [22.5, 25.3, 19.8, 30.1, 27.0, 21.6, 23.9];
+    if (isset($_POST['calcular'])) {
+        $entrada = $_POST['temperaturas'];
 
-    $maxima = max($temperaturasDiarias);
-    $minima = min($temperaturasDiarias);
+        $temperaturasDiarias = array_map('floatval', array_map('trim', explode(',', $entrada)));
 
-    echo "Temperatura máxima registrada: <strong>$maxima °C</strong><br>";
-    echo "Temperatura mínima registrada: <strong>$minima °C</strong>";
+        if (count($temperaturasDiarias) > 0) {
+            $maxima = max($temperaturasDiarias);
+            $minima = min($temperaturasDiarias);
+
+            echo "<h3>Resultados:</h3>";
+            echo "Temperatura máxima registrada: <strong>$maxima °C</strong><br>";
+            echo "Temperatura mínima registrada: <strong>$minima °C</strong>";
+        } else {
+            echo "<p>Insira pelo menos uma temperatura válida.</p>";
+        }
+    }
     ?>
     </div>
 </body>
